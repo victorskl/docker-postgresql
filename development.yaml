@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+
+  postgres:
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "${POSTGRES_PASS}"
+      DB_PASS: "${DB_PASS}"
+      DB_USER: "db_user"
+      DB_API: "db_api"
+      DB_CORE: "db_core"
+    ports:
+      - "5432:5432"

@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+
+  postgres:
+    build:
+      context: ./postgres
+#    volumes:
+#      - /mnt/postgresql/data:/var/lib/postgresql/data
+    restart: always
