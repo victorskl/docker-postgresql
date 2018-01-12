@@ -1,6 +1,6 @@
 # docker-postgresql
 
-This is the relational model development stack using PostgreSQL. [aka How to] Enterprise Data Modelling development with PostgreSQL, using Docker, from local development up to deliverable to the production deployment end.
+This is the relational model development stack using PostgreSQL. [aka How to] Enterprise Data Modelling development with PostgreSQL, using Docker, from local development up to deliverable to the production deployment end. It uses the [official PostgreSQL docker image](https://github.com/docker-library/postgres) that can be found from [hub](https://hub.docker.com/_/postgres/) or [store](https://store.docker.com/images/postgres).
 
 This does:
 
@@ -12,7 +12,7 @@ This does:
 It assumes:
 
 - you have docker installed, up and running
-- trivially on macOS `brew install docker`
+- trivially on macOS `brew install docker` or get official [download for Desktop](https://www.docker.com/docker-mac)
 - then prepare the environment variables
 
 ```
@@ -31,6 +31,13 @@ docker-compose -f docker-compose.yaml -f development.yaml --project-name=dev up 
 ```
 docker ps
 docker exec -it dev_postgres_1 bash
+```
+
+- Stop
+
+```
+docker ps
+docker-compose -f docker-compose.yaml -f development.yaml --project-name=dev down
 ```
 
 - Recycle
@@ -63,6 +70,7 @@ exit
 exit
 ```
 
+*PS denotes - PowerShell windows*
 
 ### Data Modeling
 
@@ -89,3 +97,10 @@ exit
 ### Production
 
 - Expand and adapt this to prepare the necessary arrangement for your production environment.
+
+- Check the [docker compose volumes](https://docs.docker.com/compose/compose-file/#volumes) setting to persist the PostgreSQL data - which is commented out in [docker-compose.yaml](docker-compose.yaml)
+
+    ```
+        volumes:
+          - /mnt/postgresql/data:/var/lib/postgresql/data
+    ```
