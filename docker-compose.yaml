@@ -5,6 +5,7 @@ services:
   postgres:
     build:
       context: ./postgres
-#    volumes:
-#      - /mnt/postgresql/data:/var/lib/postgresql/data
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    container_name: postgres
     restart: always

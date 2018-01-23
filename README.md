@@ -12,25 +12,33 @@ This does:
 It assumes:
 
 - you have docker installed, up and running
-- trivially on macOS `brew install docker` or get official [download for Desktop](https://www.docker.com/docker-mac)
+- trivially on macOS get official [download for Desktop](https://www.docker.com/docker-mac) or `brew install docker`
 - then prepare the environment variables
 
 ```
 cp env.sample .env
 ```
 
-### Running Background (aka Daemon)
+### Running Foreground (Interactive)
 
 ```
 docker-compose -f docker-compose.yaml -f development.yaml --project-name=dev build
-docker-compose -f docker-compose.yaml -f development.yaml --project-name=dev up -d
+docker-compose -f docker-compose.yaml -f development.yaml --project-name=dev up
 ```
 
 - Enter
 
 ```
 docker ps
-docker exec -it dev_postgres_1 bash
+docker exec -it postgres bash
+su - postgres
+psql
+\l
+\c db_api
+SELECT * FROM pg_extension;
+\q
+exit
+exit
 ```
 
 - Stop
@@ -43,31 +51,30 @@ docker-compose -f docker-compose.yaml -f development.yaml --project-name=dev dow
 - Recycle
 
 ```
-docker rm dev_postgres_1
+docker ps -a
+docker images -a
+docker rm postgres
 docker rmi dev_postgres
 ```
 
-### Running Foreground (Interactive)
+### Running Background (Daemon)
 
 - Change `.cmd` to `.sh` if macOS or Linux.
 
-PS1
 ```
+(Windows)
 PS D:\Projects\github\docker-postgresql> .\bin\build.cmd
 PS D:\Projects\github\docker-postgresql> .\bin\start.cmd
+
+(macOS)
+bash bin/build.sh
+bash bin/start.sh
 ```
 
-PS2
+- Enter into PostgreSQL container
+
 ```
 PS D:\Projects\github\docker-postgresql> .\bin\enter.cmd
-su - postgres
-psql
-\l
-\c db_api
-SELECT * FROM pg_extension;
-\q
-exit
-exit
 ```
 
 *PS denotes - PowerShell windows*
@@ -98,9 +105,9 @@ exit
 
 - Expand and adapt this to prepare the necessary arrangement for your production environment.
 
-- Check the [docker compose volumes](https://docs.docker.com/compose/compose-file/#volumes) setting to persist the PostgreSQL data - which is commented out in [docker-compose.yaml](docker-compose.yaml)
+- Check the [docker compose volumes](https://docs.docker.com/compose/compose-file/#volumes) setting to persist the PostgreSQL data - which is in [docker-compose.yaml](docker-compose.yaml) to `./data` directory 
 
     ```
         volumes:
-          - /mnt/postgresql/data:/var/lib/postgresql/data
+          - ./data:/var/lib/postgresql/data
     ```
