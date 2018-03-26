@@ -16,7 +16,22 @@ It assumes:
 - then prepare the environment variables
 
 ```
+git clone https://github.com/victorskl/docker-postgresql.git
+cd docker-postgresql
+mkdir -p data
 cp env.sample .env
+```
+
+### Quick Start
+
+If you know what you are doing, here is TL;DR:
+
+```
+sed -i '' -e 's/#POSTGRES_USER/POSTGRES_USER/g' .env
+sed -i '' -e 's/#DB_USER/DB_USER/g' .env
+sed -i '' -e 's/#DB_API/DB_API/g' .env
+sed -i '' -e 's/#DB_CORE/DB_CORE/g' .env
+docker-compose -p dev up -d
 ```
 
 ### Running Foreground (Interactive)

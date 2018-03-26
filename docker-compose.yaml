@@ -9,3 +9,5 @@ services:
       - ./data:/var/lib/postgresql/data
     container_name: postgres
     restart: always
+    ports:
+      - "5432:5432"
